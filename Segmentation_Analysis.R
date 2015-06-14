@@ -1,5 +1,3 @@
-# Initialize --------------------------------------------------------------
-
 setwd("/Volumes/HD2/Users/pstessel/Documents/Github/R/450_R_Code")
 load("apphappyData.RData")
 q24 <- read.csv(file="q24.csv", header = FALSE, sep = ",", quote = "\"",
@@ -12,31 +10,17 @@ numdata <- apphappy.3.num.frame
 labdata <- apphappy.3.labs.frame
 backup <- numdata
 
-random.imp <- function (a){
-    missing <- is.na(a)
-    n.missing <- sum(missing)
-    a.obs <- a[!missing]
-    imputed <- a
-    imputed[missing] <- sample (a.obs, n.missing, replace=TRUE)
-    return (imputed)
-}
-q12.imp <- random.imp(numdata$q12)
-q57.imp <- random.imp(numdata$q57)
+### Following are EDA
 
-numdata <- data.frame(numdata, q12.imp, q57.imp)
-
-
-# EDA ---------------------------------------------------------------------
 str(numdata)
 summary(numdata)
 a=table(numdata$q1)
 a
-barplot(a, main="Age Groups")
-?barplot
-b=table(numdata$q1,numdata$q13r4)
+barplot(a)
+b=table(numdata$q1,numdata$q2r1)
 b
 barplot(b)
-hist(numdata$q24r12)
+hist(numdata$q1)
 
 ### q24 ----------------------------------------------------------------------------
 
@@ -45,7 +29,7 @@ numdata$avg_q24b <- (numdata$q24r7 + numdata$q24r8 + numdata$q24r10 +
 numdata$q24r11 + numdata$q24r12)/5
 
 ### numsub <- subset(numdata, select=c("q24r1", "q24r2", "q24r3",	"avg_q24a", "q24r5",	"q24r6",
-#                                   "avg_q24b"))
+"avg_q24b"))
 
 ### q25 ----------------------------------------------------------------------------
 
@@ -54,7 +38,7 @@ numdata$q25r4 + numdata$q25r5 + numdata$q25r7 +
 numdata$q25r8 + numdata$q25r9 + numdata$q25r10 + numdata$q25r11)/10
 
 ### numsub <- subset(numdata, select=c("avg_q25",
-#                                   "q25r6", "q25r12"))
+"q25r6", "q25r12"))
 
 ### q26 ----------------------------------------------------------------------------
 
@@ -64,31 +48,31 @@ numdata$q26r10 + numdata$q26r12 + numdata$q26r13 +numdata$q26r14 +
 numdata$q26r15 + numdata$q26r16 + numdata$q26r17 + numdata$q26r18)/14
 
 
-# ### numsub <- subset(numdata, select=c("q26r3", "avg_q26",
-#                                    "q26r11"))
+### numsub <- subset(numdata, select=c("q26r3", "avg_q26",
+"q26r11"))
 
 ### FINAL ----------------------------------------------------------------------------
 
-numdata$avg_final <- (numdata$q24r2 + numdata$q24r3 +
-numdata$q24r5 + numdata$q24r6 + numdata$avg_q24b +
-numdata$avg_q25 + numdata$avg_q26)/7
+### REMOVED
 
-#REMOVED
-# numdata$q24r1 +
-# + numdata$q26r11
-# + numdata$q25r12
-# "avg_q24a"
-# + numdata$q26r3
+# "q24r9",
 
-numsub <- subset(numdata, select=c("avg_final"))
+#numsub <- subset(numdata, select=c("q24r1", "q24r2", "q24r3", "q24r4",
+"q24r5",	"q24r6",	"q24r7",	"q24r8",
+"q24r10",	"q24r11",	"q24r12",
+"q25r1",  "q25r2",	"q25r3",	"q25r4",
+"q25r5",	"q25r6",	"q25r7",	"q25r8",
+"q25r9",	"q25r10",	"q25r11",	"q25r12",
+"q26r3",  "q26r4",	"q26r5",	"q26r6",
+"q26r7",	"q26r8",	"q26r9",	"q26r10",
+"q26r11",	"q26r12",	"q26r13",	"q26r14",
+"q26r15", "q26r16",	"q26r17",	"q26r18"))
 
+### REMOVED
+# "q25r1", "q26r10", "q24r3", "q26r14",
 
-# ANOTHER TRY -------------------------------------------------------------
-
-
-# numdata$avg_q24r3r4 <- (numdata$q24r3 + numdata$q24r4)/2
-#
-# numsub <- subset(numdata, select=c("avg_q24r3r4", "avg_q26"))
+numsub <- subset(numdata, select=c("q24r2", "q24r7","q25r5","q25r9","q26r9",
+"q26r11", "q26r12", "q26r17"))
 
 rcorr(as.matrix(numsub), type="pearson")
 
@@ -244,11 +228,7 @@ my_hist3d(x, y, nclass=10)
 
 
 newdf <- read.csv("clusterresults.csv")
-combdata <- cbind(numsub, newdf, numdata$q1, numdata$q11, numdata$q12.imp, numdata$q13r1, numdata$q13r2, numdata$q13r3,
-numdata$q13r4, numdata$q13r5, numdata$q13r6, numdata$q13r7, numdata$q13r8, numdata$q13r9,
-numdata$q13r10, numdata$q13r11, numdata$q13r12, numdata$q48,
-numdata$q49, numdata$q54, numdata$q56,
-numdata$q57.imp)
+combdata <- cbind(numsub,newdf,numdata$q1)
 head(combdata)
 require(reshape)
 combdata <- rename(combdata, c(clusterresults.cluster="cluster"))
@@ -259,7 +239,7 @@ aggregate(combdata,by=list(byvar=combdata$cluster), mean)
 
 profiler <- aggregate(combdata,by=list(byvar=combdata$cluster), mean)
 
-write.csv(profiler, "profiler.csv", row.names=FALSE, na="")
+
 ###
 
 # Same, except that instead of "NA", output blank cells
@@ -286,4 +266,3 @@ shazam.imp <- random.imp(numdata$q5r1)
 
 read.csv(file, header = TRUE, sep = ",", quote = "\"",
 dec = ".", fill = TRUE, comment.char = "", ...)
-
