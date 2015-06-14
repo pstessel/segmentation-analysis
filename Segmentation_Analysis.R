@@ -124,26 +124,41 @@ corrplot(numsubcorrelation)
 
 # MIXDOWNS ----------------------------------------------------------------
 
-numdata$avg_q24b_25 <- (numdata$q24r2 +numdata$q24r6 + numdata$q24r7 + numdata$q24r8 +
-numdata$q24r10 + numdata$q24r11 + numdata$q24r12
+numdata$avg_q24b_25_26 <- (numdata$q24r2 +
+numdata$q24r2 +
+numdata$q24r5 +
+numdata$q24r7 + numdata$q24r8 +
+numdata$q24r10 + numdata$q24r11 + numdata$q24r12 +
 numdata$q25r1 + numdata$q25r2 +
 numdata$q25r4 + numdata$q25r5 +
 numdata$q25r5 + numdata$q25r8 +
+numdata$q25r6 +
 numdata$q25r9 +
 numdata$q25r10 +
-numdata$q25r11
-)/16
+numdata$q25r11 +
+numdata$q26r4 +
+numdata$q26r5 +
+numdata$q26r6 +
+numdata$q26r7 +
+numdata$q26r8 +
+numdata$q26r9 +
+numdata$q26r10 +
+numdata$q26r12 +
+numdata$q26r13 +
+numdata$q26r14 +
+numdata$q26r15 +
+numdata$q26r16 +
+numdata$q26r17 +
+numdata$q26r18
+)/33
 
 ### FINAL ----------------------------------------------------------------------------
 
 numsub <- subset(numdata, select=c(
 "avg_q24a",
-"q24r5",
-"avg_q24b_25",
-"q25r6",
+"avg_q24b_25_26",
 "q25r12",
 "q26r3",
-"avg_q26",
 "q26r11"
 ))
 
@@ -370,6 +385,7 @@ write.csv(profiler, "profiler.csv", row.names=FALSE, na="")
 
 # Same, except that instead of "NA", output blank cells
 write.csv(profiler, "profiler.csv", row.names=FALSE, na="")
+write.csv(numdata, "numdata.csv", row.names=FALSE, na="")
 
 #################### My Code ######################################
 
