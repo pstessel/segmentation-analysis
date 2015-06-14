@@ -1,3 +1,5 @@
+# Initialize --------------------------------------------------------------
+
 setwd("/Volumes/HD2/Users/pstessel/Documents/Github/R/450_R_Code")
 load("apphappyData.RData")
 q24 <- read.csv(file="q24.csv", header = FALSE, sep = ",", quote = "\"",
@@ -10,55 +12,169 @@ numdata <- apphappy.3.num.frame
 labdata <- apphappy.3.labs.frame
 backup <- numdata
 
-### Following are EDA
+random.imp <- function (a){
+    missing <- is.na(a)
+    n.missing <- sum(missing)
+    a.obs <- a[!missing]
+    imputed <- a
+    imputed[missing] <- sample (a.obs, n.missing, replace=TRUE)
+    return (imputed)
+}
+q12.imp <- random.imp(numdata$q12)
+q57.imp <- random.imp(numdata$q57)
 
+numdata <- data.frame(numdata, q12.imp, q57.imp)
+
+
+# EDA ---------------------------------------------------------------------
 str(numdata)
 summary(numdata)
 a=table(numdata$q1)
 a
-barplot(a)
-b=table(numdata$q1,numdata$q2r1)
+barplot(a, main="Age Groups")
+?barplot
+b=table(numdata$q1,numdata$q13r4)
 b
 barplot(b)
-hist(numdata$q1)
+hist(numdata$q24r12)
 
 ### q24 ----------------------------------------------------------------------------
 
-numdata$avg_q24a <- (numdata$q24r4 + numdata$q24r9)/2
-numdata$avg_q24b <- (numdata$q24r7 + numdata$q24r8 + numdata$q24r10 +
-numdata$q24r11 + numdata$q24r12)/5
+numdata$avg_q24a <- (numdata$q24r1 +numdata$q24r3 + numdata$q24r4 + numdata$q24r9)/4
+numdata$avg_q24b <- (numdata$q24r2 +numdata$q24r6 + numdata$q24r7 + numdata$q24r8 +
+numdata$q24r10 + numdata$q24r11 + numdata$q24r12)/7
 
-### numsub <- subset(numdata, select=c("q24r1", "q24r2", "q24r3",	"avg_q24a", "q24r5",	"q24r6",
-"avg_q24b"))
+numsub <- subset(numdata, select=c
+(
+"avg_q24a",
+"q24r5",
+"avg_q24b"
+))
+
+rcorr(as.matrix(numsub), type="pearson")
+
+str(numsub)
+summary(numsub)
+head(numsub)
+
+require(corrplot)
+numsubcorrelation <- cor(numsub)
+corrplot(numsubcorrelation)
 
 ### q25 ----------------------------------------------------------------------------
 
-numdata$avg_q25 <- (numdata$q25r1 + numdata$q25r2 + numdata$q25r3 +
-numdata$q25r4 + numdata$q25r5 + numdata$q25r7 +
-numdata$q25r8 + numdata$q25r9 + numdata$q25r10 + numdata$q25r11)/10
+numdata$avg_q25 <- (numdata$q25r1 + numdata$q25r2 +
+numdata$q25r4 + numdata$q25r5 +
+numdata$q25r5 + numdata$q25r8 +
+numdata$q25r9 +
+numdata$q25r10 +
+numdata$q25r11)/9
 
-### numsub <- subset(numdata, select=c("avg_q25",
-"q25r6", "q25r12"))
+numsub <- subset(numdata, select=c(
+"avg_q25",
+"q25r6",
+"q25r12"
+))
+
+rcorr(as.matrix(numsub), type="pearson")
+
+str(numsub)
+summary(numsub)
+head(numsub)
+
+require(corrplot)
+numsubcorrelation <- cor(numsub)
+corrplot(numsubcorrelation)
 
 ### q26 ----------------------------------------------------------------------------
 
-numdata$avg_q26 <- (numdata$q26r4 + numdata$q26r5 + numdata$q26r6 +
-numdata$q26r7 + numdata$q26r8 + numdata$q26r9 +
-numdata$q26r10 + numdata$q26r12 + numdata$q26r13 +numdata$q26r14 +
-numdata$q26r15 + numdata$q26r16 + numdata$q26r17 + numdata$q26r18)/14
+numdata$avg_q26 <- (
+numdata$q26r4 +
+numdata$q26r5 +
+numdata$q26r6 +
+numdata$q26r7 +
+numdata$q26r8 +
+numdata$q26r9 +
+numdata$q26r10 +
+numdata$q26r12 +
+numdata$q26r13 +
+numdata$q26r14 +
+numdata$q26r15 +
+numdata$q26r16 +
+numdata$q26r17 +
+numdata$q26r18
+)/13
+
+numsub <- subset(numdata, select=c(
+"q26r3",
+"avg_q26",
+"q26r11"
+))
+
+rcorr(as.matrix(numsub), type="pearson")
+
+str(numsub)
+summary(numsub)
+head(numsub)
+
+require(corrplot)
+numsubcorrelation <- cor(numsub)
+corrplot(numsubcorrelation)
 
 
-### numsub <- subset(numdata, select=c("q26r3", "avg_q26",
-"q26r11"))
+# MIXDOWNS ----------------------------------------------------------------
+
+numdata$avg_q24b_25 <- (numdata$q24r2 +numdata$q24r6 + numdata$q24r7 + numdata$q24r8 +
+numdata$q24r10 + numdata$q24r11 + numdata$q24r12
+numdata$q25r1 + numdata$q25r2 +
+numdata$q25r4 + numdata$q25r5 +
+numdata$q25r5 + numdata$q25r8 +
+numdata$q25r9 +
+numdata$q25r10 +
+numdata$q25r11
+)/16
 
 ### FINAL ----------------------------------------------------------------------------
 
-numdata$avg_final <- (numdata$avg_q24a + numdata$q24r1 + numdata$q24r2 + numdata$q24r3 +
-numdata$q24r5 + numdata$q24r6 + numdata$avg_q25 +
-numdata$q25r12 + numdata$avg_q26 +
-numdata$q26r3 + numdata$q26r11)/11
+numsub <- subset(numdata, select=c(
+"avg_q24a",
+"q24r5",
+"avg_q24b_25",
+"q25r6",
+"q25r12",
+"q26r3",
+"avg_q26",
+"q26r11"
+))
 
-numsub <- subset(numdata, select=c("avg_q24b", "avg_final"))
+rcorr(as.matrix(numsub), type="pearson")
+
+str(numsub)
+summary(numsub)
+head(numsub)
+
+require(corrplot)
+numsubcorrelation <- cor(numsub)
+corrplot(numsubcorrelation)
+
+clusterresults <- kmeans(numsub,5)
+clusterresults
+clusterresults$withinss
+clusterresults$tot.withinss
+clusterresults$totss
+clusterresults$betweenss
+clusterresults$size
+
+
+# ANOTHER TRY -------------------------------------------------------------
+
+
+# numdata$avg_q24r3r4 <- (numdata$q24r3 + numdata$q24r4)/2
+#
+# numsub <- subset(numdata, select=c("avg_q24r3r4", "avg_q26"))
+
+
+# Correlation -------------------------------------------------------------
 
 rcorr(as.matrix(numsub), type="pearson")
 
@@ -76,10 +192,7 @@ corrplot(mcor, method="shade", shade.col=NA, tl.col="black")
 #corrplot(numsubcorrelation, method="shade", addCoef.col="black", #addCoefasPercent=TRUE ,type="lower", shade.col=NA, tl.col="black", #tl.srt=45, addcolorlabel="no", order="AOE",insig = "p-value")
 
 
-
-
-
-### Create a 'scree' plot to determine the num of clusters
+# Create a 'scree' plot to determine the num of clusters ------------------
 
 wssplot <- function(numsub, nc=15, seed=1234) {
     wss <- (nrow(numsub)-1)*sum(apply(numsub,2,var))
@@ -91,7 +204,7 @@ wssplot <- function(numsub, nc=15, seed=1234) {
 
 wssplot(numsub)
 
-### Create a Kmeans with 5 clusters
+# Create a Kmeans with 5 clusters -----------------------------------------
 
 clusterresults <- kmeans(numsub,5)
 clusterresults
@@ -101,7 +214,8 @@ clusterresults$totss
 clusterresults$betweenss
 clusterresults$size
 
-### Create a PC plot
+# Create a PC plot --------------------------------------------------------
+
 
 plot(clusterresults, data=numsub)
 
@@ -116,7 +230,7 @@ write.csv(newdf, file = "clusterresults.csv")
 
 write.csv(numsub, file = "numsub.csv")
 
-### PCA Analysis to 'see' the 'clusters'
+# ### PCA Analysis to 'see' the 'clusters' --------------------------------
 
 fit <- princomp(numsub, cor=TRUE)
 summary(fit)
@@ -168,7 +282,9 @@ my_hist3d <- function(x, y, freq=FALSE, nclass="auto") {
 
 library(latticeExtra)
 
-############################
+
+
+# Create score.csv --------------------------------------------------------
 
 s <- read.csv("score.csv")
 x <- s$Comp.1
@@ -176,9 +292,7 @@ y <- s$Comp.2
 my_hist3d(x, y, nclass=10)
 
 
-
-
-### Create a MDS to 'see' the 'clusters'
+# ### Create a MDS to 'see' the 'clusters' --------------------------------
 
 d <- dist(numsub)
 fit <- cmdscale(d,eig=TRUE, k=2)
@@ -214,7 +328,33 @@ my_hist3d(x, y, nclass=10)
 
 
 newdf <- read.csv("clusterresults.csv")
-combdata <- cbind(numsub,newdf,numdata$q1)
+combdata <- cbind(numsub, newdf, numdata$q1,
+numdata$q2r1,
+numdata$q2r2,
+numdata$q2r3,
+numdata$q2r4,
+numdata$q2r5,
+numdata$q2r6,
+numdata$q2r7,
+numdata$q2r8,
+numdata$q2r9,
+numdata$q2r10,
+numdata$q4r1,
+numdata$q4r2,
+numdata$q4r3,
+numdata$q4r4,
+numdata$q4r5,
+numdata$q4r6,
+numdata$q4r7,
+numdata$q4r8,
+numdata$q4r9,
+numdata$q4r10,
+numdata$q4r11,
+numdata$q12.imp, numdata$q13r1, numdata$q13r2, numdata$q13r3,
+numdata$q13r4, numdata$q13r5, numdata$q13r6, numdata$q13r7, numdata$q13r8, numdata$q13r9,
+numdata$q13r10, numdata$q13r11, numdata$q13r12, numdata$q48,
+numdata$q49, numdata$q54, numdata$q56,
+numdata$q57.imp)
 head(combdata)
 require(reshape)
 combdata <- rename(combdata, c(clusterresults.cluster="cluster"))
@@ -225,7 +365,7 @@ aggregate(combdata,by=list(byvar=combdata$cluster), mean)
 
 profiler <- aggregate(combdata,by=list(byvar=combdata$cluster), mean)
 
-
+write.csv(profiler, "profiler.csv", row.names=FALSE, na="")
 ###
 
 # Same, except that instead of "NA", output blank cells
@@ -252,3 +392,4 @@ shazam.imp <- random.imp(numdata$q5r1)
 
 read.csv(file, header = TRUE, sep = ",", quote = "\"",
 dec = ".", fill = TRUE, comment.char = "", ...)
+
