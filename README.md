@@ -1,5 +1,5 @@
-# segmentation-analysis
-## general attitudinal post hoc segmentation analysis
+### segmentation-analysis
+### general attitudinal post hoc segmentation analysis
 
 # The App Happy Company and the Market for Social Entertainment Apps
 
