@@ -53,26 +53,12 @@ numdata$q26r15 + numdata$q26r16 + numdata$q26r17 + numdata$q26r18)/14
 
 ### FINAL ----------------------------------------------------------------------------
 
-### REMOVED
+numdata$avg_final <- (numdata$avg_q24a + numdata$q24r1 + numdata$q24r2 + numdata$q24r3 +
+numdata$q24r5 + numdata$q24r6 + numdata$avg_q25 +
+numdata$q25r12 + numdata$avg_q26 +
+numdata$q26r3 + numdata$q26r11)/11
 
-# "q24r9",
-
-#numsub <- subset(numdata, select=c("q24r1", "q24r2", "q24r3", "q24r4",
-"q24r5",	"q24r6",	"q24r7",	"q24r8",
-"q24r10",	"q24r11",	"q24r12",
-"q25r1",  "q25r2",	"q25r3",	"q25r4",
-"q25r5",	"q25r6",	"q25r7",	"q25r8",
-"q25r9",	"q25r10",	"q25r11",	"q25r12",
-"q26r3",  "q26r4",	"q26r5",	"q26r6",
-"q26r7",	"q26r8",	"q26r9",	"q26r10",
-"q26r11",	"q26r12",	"q26r13",	"q26r14",
-"q26r15", "q26r16",	"q26r17",	"q26r18"))
-
-### REMOVED
-# "q25r1", "q26r10", "q24r3", "q26r14",
-
-numsub <- subset(numdata, select=c("q24r2", "q24r7","q25r5","q25r9","q26r9",
-"q26r11", "q26r12", "q26r17"))
+numsub <- subset(numdata, select=c("avg_q24b", "avg_final"))
 
 rcorr(as.matrix(numsub), type="pearson")
 
