@@ -33,10 +33,10 @@ a=table(numdata$q1)
 a
 barplot(a, main="Age Groups")
 ?barplot
-b=table(numdata$q1,numdata$q13r4)
+b=table(numdata$q1,numdata$q24r1)
 b
 barplot(b)
-hist(numdata$q24r12)
+hist(numdata$q26r18)
 
 ### q24 ----------------------------------------------------------------------------
 
@@ -154,19 +154,62 @@ numdata$q26r18
 
 ### FINAL ----------------------------------------------------------------------------
 
+numdata$avg_q24r4_9 <- (
+numdata$q24r1 +
+numdata$q24r4 +
+numdata$q24r9 +
+numdata$q25r6 +
+numdata$q25r11 +
+numdata$q25r12
+)/6
+
+numdata$avg_q24_5_6 <- (
+numdata$q24r2 +
+numdata$q24r3 +
+numdata$q24r5 +
+numdata$q24r6 +
+numdata$q24r7 +
+numdata$q24r8 +
+numdata$q24r10 +
+numdata$q24r11 +
+numdata$q24r12 +
+numdata$q25r1 +
+numdata$q25r2 +
+numdata$q25r3 +
+numdata$q25r4 +
+numdata$q25r5 +
+numdata$q25r7 +
+numdata$q25r8 +
+numdata$q25r9 +
+numdata$q25r10 +
+numdata$q25r11 +
+numdata$q26r3 +
+numdata$q26r4 +
+numdata$q26r5 +
+numdata$q26r6 +
+numdata$q26r7 +
+numdata$q26r8 +
+numdata$q26r9 +
+numdata$q26r10 +
+numdata$q26r12 +
+numdata$q26r13 +
+numdata$q26r14 +
+numdata$q26r15 +
+numdata$q26r16 +
+numdata$q26r17 +
+numdata$q26r18
+)/34
+
 numsub <- subset(numdata, select=c(
-"avg_q24a",
-"avg_q24b_25_26",
-"q25r12",
-"q26r3",
-"q26r11"
+"avg_q24r4_9",
+"avg_q24_5_6"
 ))
 
 rcorr(as.matrix(numsub), type="pearson")
 
-str(numsub)
-summary(numsub)
-head(numsub)
+# str(numsub)
+# summary(numsub)
+# head(numsub)
 
 require(corrplot)
 numsubcorrelation <- cor(numsub)
@@ -221,7 +264,7 @@ wssplot(numsub)
 
 # Create a Kmeans with 5 clusters -----------------------------------------
 
-clusterresults <- kmeans(numsub,5)
+clusterresults <- kmeans(numsub, 12)
 clusterresults
 clusterresults$withinss
 clusterresults$tot.withinss
@@ -343,7 +386,8 @@ my_hist3d(x, y, nclass=10)
 
 
 newdf <- read.csv("clusterresults.csv")
-combdata <- cbind(numsub, newdf, numdata$q1,
+combdata <- cbind(numsub, newdf,
+numdata$q1,
 numdata$q2r1,
 numdata$q2r2,
 numdata$q2r3,
