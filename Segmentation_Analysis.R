@@ -157,18 +157,17 @@ numdata$q26r18
 ### FINAL ----------------------------------------------------------------------------
 
 numdata$avg_a <- (
+numdata$q26r14 +
+numdata$q26r15 +
 numdata$q24r2 +
-numdata$q24r4 +
-numdata$q24r12 +
-numdata$q25r6
-)/4
-
+numdata$q24r7 +
+numdata$q26r17
+)/5
 
 
 numsub <- subset(numdata, select=c(
 "avg_a",
-"q26r3",
-"q26r11"
+"q26r3"
 ))
 
 rcorr(as.matrix(numsub), type="pearson")
@@ -230,7 +229,7 @@ wssplot(numsub)
 
 # Create a Kmeans with 5 clusters -----------------------------------------
 
-clusterresults <- kmeans(numsub, 5)
+clusterresults <- kmeans(numsub, 6)
 clusterresults
 clusterresults$withinss
 clusterresults$tot.withinss
@@ -349,8 +348,6 @@ my_hist3d(x, y, nclass=10)
 ### Create a dataset with the original data with the cluster info
 ### This will be useful for creating profiles for the clusters
 
-
-
 newdf <- read.csv("clusterresults.csv")
 combdata <- cbind(numsub, newdf,
 numdata$q1,
@@ -396,23 +393,6 @@ write.csv(profiler, "profiler.csv", row.names=FALSE, na="")
 # Same, except that instead of "NA", output blank cells
 write.csv(profiler, "profiler.csv", row.names=FALSE, na="")
 write.csv(numdata, "numdata.csv", row.names=FALSE, na="")
-
-cl_1 <- combdata$cluster == 1
-sum(cl_1)
-
-cl_2 <- combdata$cluster == 2
-sum(cl_2)
-
-cl_3 <- combdata$cluster == 3
-sum(cl_3)
-
-cl_4 <- combdata$cluster == 4
-sum(cl_4)
-
-cl_5 <- combdata$cluster == 5
-sum(cl_5)
-
-profiler
 
 #################### My Code ######################################
 
