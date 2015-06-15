@@ -3,7 +3,7 @@
 setwd("/Volumes/HD2/Users/pstessel/Documents/Github/R/450_R_Code")
 load("apphappyData.RData")
 q24 <- read.csv(file="q24.csv", header = FALSE, sep = ",", quote = "\"",
-                dec = ".", fill = TRUE)
+dec = ".", fill = TRUE)
 ls()
 require(cluster)
 require(useful)
@@ -13,12 +13,12 @@ labdata <- apphappy.3.labs.frame
 backup <- numdata
 
 random.imp <- function (a){
-  missing <- is.na(a)
-  n.missing <- sum(missing)
-  a.obs <- a[!missing]
-  imputed <- a
-  imputed[missing] <- sample (a.obs, n.missing, replace=TRUE)
-  return (imputed)
+    missing <- is.na(a)
+    n.missing <- sum(missing)
+    a.obs <- a[!missing]
+    imputed <- a
+    imputed[missing] <- sample (a.obs, n.missing, replace=TRUE)
+    return (imputed)
 }
 q12.imp <- random.imp(numdata$q12)
 q57.imp <- random.imp(numdata$q57)
@@ -42,14 +42,14 @@ hist(numdata$q24r12)
 
 numdata$avg_q24a <- (numdata$q24r1 +numdata$q24r3 + numdata$q24r4 + numdata$q24r9)/4
 numdata$avg_q24b <- (numdata$q24r2 +numdata$q24r6 + numdata$q24r7 + numdata$q24r8 +
-                                 numdata$q24r10 + numdata$q24r11 + numdata$q24r12)/7
+numdata$q24r10 + numdata$q24r11 + numdata$q24r12)/7
 
 numsub <- subset(numdata, select=c
-  (
-    "avg_q24a",
-    "q24r5",
-    "avg_q24b"
-  ))
+(
+"avg_q24a",
+"q24r5",
+"avg_q24b"
+))
 
 rcorr(as.matrix(numsub), type="pearson")
 
@@ -64,17 +64,17 @@ corrplot(numsubcorrelation)
 ### q25 ----------------------------------------------------------------------------
 
 numdata$avg_q25 <- (numdata$q25r1 + numdata$q25r2 +
-                    numdata$q25r4 + numdata$q25r5 +
-                    numdata$q25r5 + numdata$q25r8 + 
-                    numdata$q25r9 +
-                      numdata$q25r10 +
-                      numdata$q25r11)/9
+numdata$q25r4 + numdata$q25r5 +
+numdata$q25r5 + numdata$q25r8 +
+numdata$q25r9 +
+numdata$q25r10 +
+numdata$q25r11)/9
 
 numsub <- subset(numdata, select=c(
-  "avg_q25",
-  "q25r6",
-  "q25r12"
-  ))
+"avg_q25",
+"q25r6",
+"q25r12"
+))
 
 rcorr(as.matrix(numsub), type="pearson")
 
@@ -89,27 +89,27 @@ corrplot(numsubcorrelation)
 ### q26 ----------------------------------------------------------------------------
 
 numdata$avg_q26 <- (
-    numdata$q26r4 +
-    numdata$q26r5 +
-    numdata$q26r6 +
-    numdata$q26r7 +
-    numdata$q26r8 +
-    numdata$q26r9 +
-    numdata$q26r10 +
-    numdata$q26r12 +
-    numdata$q26r13 +
-    numdata$q26r14 +
-    numdata$q26r15 +
-    numdata$q26r16 +
-    numdata$q26r17 +
-    numdata$q26r18
-  )/13
+numdata$q26r4 +
+numdata$q26r5 +
+numdata$q26r6 +
+numdata$q26r7 +
+numdata$q26r8 +
+numdata$q26r9 +
+numdata$q26r10 +
+numdata$q26r12 +
+numdata$q26r13 +
+numdata$q26r14 +
+numdata$q26r15 +
+numdata$q26r16 +
+numdata$q26r17 +
+numdata$q26r18
+)/13
 
 numsub <- subset(numdata, select=c(
-  "q26r3",
-  "avg_q26",
-  "q26r11"
-  ))
+"q26r3",
+"avg_q26",
+"q26r11"
+))
 
 rcorr(as.matrix(numsub), type="pearson")
 
@@ -125,85 +125,85 @@ corrplot(numsubcorrelation)
 # MIXDOWNS ----------------------------------------------------------------
 
 numdata$avg_q24b_25_26 <- (numdata$q24r2 +
-                        numdata$q24r2 +
-                        numdata$q24r5 +
-                        numdata$q24r7 + numdata$q24r8 +
-                        numdata$q24r10 + numdata$q24r11 + numdata$q24r12 +
-                        numdata$q25r1 + numdata$q25r2 +
-                        numdata$q25r4 + numdata$q25r5 +
-                        numdata$q25r5 + numdata$q25r8 + 
-                        numdata$q25r6 +
-                         numdata$q25r9 +
-                         numdata$q25r10 +
-                         numdata$q25r11 +
-                         numdata$q26r4 +
-                         numdata$q26r5 +
-                         numdata$q26r6 +
-                         numdata$q26r7 +
-                         numdata$q26r8 +
-                         numdata$q26r9 +
-                         numdata$q26r10 +
-                         numdata$q26r12 +
-                         numdata$q26r13 +
-                         numdata$q26r14 +
-                         numdata$q26r15 +
-                         numdata$q26r16 +
-                         numdata$q26r17 +
-                         numdata$q26r18
-                        )/33
+numdata$q24r2 +
+numdata$q24r5 +
+numdata$q24r7 + numdata$q24r8 +
+numdata$q24r10 + numdata$q24r11 + numdata$q24r12 +
+numdata$q25r1 + numdata$q25r2 +
+numdata$q25r4 + numdata$q25r5 +
+numdata$q25r5 + numdata$q25r8 +
+numdata$q25r6 +
+numdata$q25r9 +
+numdata$q25r10 +
+numdata$q25r11 +
+numdata$q26r4 +
+numdata$q26r5 +
+numdata$q26r6 +
+numdata$q26r7 +
+numdata$q26r8 +
+numdata$q26r9 +
+numdata$q26r10 +
+numdata$q26r12 +
+numdata$q26r13 +
+numdata$q26r14 +
+numdata$q26r15 +
+numdata$q26r16 +
+numdata$q26r17 +
+numdata$q26r18
+)/33
 
 ### FINAL ----------------------------------------------------------------------------
 
 numdata$avg_q24r4_9 <- (
-    numdata$q24r1 +
-    numdata$q24r4 +
-    numdata$q24r9 +
-    numdata$q25r6
+numdata$q24r1 +
+numdata$q24r4 +
+numdata$q24r9 +
+numdata$q25r6
 )/4
 
 numdata$avg_q24_5_6 <- (
-    numdata$q24r2 +
-    numdata$q24r3 +
-    numdata$q24r5 +
-    numdata$q24r6 +
-    numdata$q24r7 +
-    numdata$q24r8 +
-    numdata$q24r10 +
-    numdata$q24r11 +
-    numdata$q24r12 +
-    numdata$q25r1 +
-    numdata$q25r2 +
-    numdata$q25r3 +
-    numdata$q25r4 +
-    numdata$q25r5 +
-    numdata$q25r7 +
-    numdata$q25r8 +
-    numdata$q25r9 +
-    numdata$q25r10 +
-    numdata$q25r11 +
-    numdata$q26r4 +
-    numdata$q26r5 +
-    numdata$q26r6 +
-    numdata$q26r7 +
-    numdata$q26r8 +
-    numdata$q26r9 +
-    numdata$q26r10 +
-    numdata$q26r12 +
-    numdata$q26r13 +
-    numdata$q26r14 +
-    numdata$q26r15 +
-    numdata$q26r16 +
-    numdata$q26r17 +
-    numdata$q26r18
+numdata$q24r2 +
+numdata$q24r3 +
+numdata$q24r5 +
+numdata$q24r6 +
+numdata$q24r7 +
+numdata$q24r8 +
+numdata$q24r10 +
+numdata$q24r11 +
+numdata$q24r12 +
+numdata$q25r1 +
+numdata$q25r2 +
+numdata$q25r3 +
+numdata$q25r4 +
+numdata$q25r5 +
+numdata$q25r7 +
+numdata$q25r8 +
+numdata$q25r9 +
+numdata$q25r10 +
+numdata$q25r11 +
+numdata$q26r4 +
+numdata$q26r5 +
+numdata$q26r6 +
+numdata$q26r7 +
+numdata$q26r8 +
+numdata$q26r9 +
+numdata$q26r10 +
+numdata$q26r12 +
+numdata$q26r13 +
+numdata$q26r14 +
+numdata$q26r15 +
+numdata$q26r16 +
+numdata$q26r17 +
+numdata$q26r18
 )/33
 
 numsub <- subset(numdata, select=c(
-  "avg_q24r4_9",
-  "avg_q24_5_6",
-  "q25r12",
-  "q26r3",
-  "q26r11"
-  ))
+"avg_q24r4_9",
+"avg_q24_5_6",
+"q25r12",
+"q26r3",
+"q26r11"
+))
 
 rcorr(as.matrix(numsub), type="pearson")
 
@@ -228,7 +228,7 @@ clusterresults$size
 
 
 # numdata$avg_q24r3r4 <- (numdata$q24r3 + numdata$q24r4)/2
-# 
+#
 # numsub <- subset(numdata, select=c("avg_q24r3r4", "avg_q26"))
 
 
@@ -253,12 +253,12 @@ corrplot(mcor, method="shade", shade.col=NA, tl.col="black")
 # Create a 'scree' plot to determine the num of clusters ------------------
 
 wssplot <- function(numsub, nc=15, seed=1234) {
-  wss <- (nrow(numsub)-1)*sum(apply(numsub,2,var))
-  for (i in 2:nc) {
-    set.seed(seed)
-    wss[i] <- sum(kmeans(numsub, centers=i)$withinss)}
-  plot(1:nc, wss, type="b", xlab="Number of Clusters",
-       ylab="Within groups sum of squares")} 
+    wss <- (nrow(numsub)-1)*sum(apply(numsub,2,var))
+    for (i in 2:nc) {
+        set.seed(seed)
+        wss[i] <- sum(kmeans(numsub, centers=i)$withinss)}
+    plot(1:nc, wss, type="b", xlab="Number of Clusters",
+    ylab="Within groups sum of squares")}
 
 wssplot(numsub)
 
@@ -293,7 +293,7 @@ write.csv(numsub, file = "numsub.csv")
 fit <- princomp(numsub, cor=TRUE)
 summary(fit)
 loadings(fit)
-plot(fit,type="lines") 
+plot(fit,type="lines")
 fit$scores
 biplot(fit)
 str(fit$scores)
@@ -319,23 +319,23 @@ g2
 
 ###################
 my_hist3d <- function(x, y, freq=FALSE, nclass="auto") {
-  n<-length(x)
-  if (nclass == "auto") { nclass<-ceiling(sqrt(nclass.Sturges(x))) }
-  breaks.x <- seq(min(x),max(x),length=(nclass+1))
-  breaks.y <- seq(min(y),max(y),length=(nclass+1))
-  h <- NULL
-  for (i in 1:nclass) 
-    for (j in 1:nclass) 
-      h <- c(h, sum(x <= breaks.x[j+1] & x >= breaks.x[j] & y <= breaks.y[i+1] & y >= breaks.y[i] ) )
-  if (freq) h <- h / n
-  xx <- as.factor(round(mean(breaks.x[1:2])+(0:(nclass-1))*diff(breaks.x[1:2]), 1))
-  yy <- as.factor(round(mean(breaks.y[1:2])+(0:(nclass-1))*diff(breaks.y[1:2]), 1))
-  res <- cbind(expand.grid(xx,yy), h)
-  colnames(res) <- c(deparse(substitute(x)),deparse(substitute(y)),'Frequency')
-  formu <- as.formula(paste("Frequency ~ ", paste(colnames(res)[1:2], collapse= "+")))
-  cloud(formu, res, panel.3d.cloud=panel.3dbars, col.facet='lightblue', 
-        xbase=1, ybase=1, scales=list(arrows=FALSE, col=1), 
-        par.settings = list(axis.line = list(col = "transparent")))
+    n<-length(x)
+    if (nclass == "auto") { nclass<-ceiling(sqrt(nclass.Sturges(x))) }
+    breaks.x <- seq(min(x),max(x),length=(nclass+1))
+    breaks.y <- seq(min(y),max(y),length=(nclass+1))
+    h <- NULL
+    for (i in 1:nclass)
+    for (j in 1:nclass)
+    h <- c(h, sum(x <= breaks.x[j+1] & x >= breaks.x[j] & y <= breaks.y[i+1] & y >= breaks.y[i] ) )
+    if (freq) h <- h / n
+    xx <- as.factor(round(mean(breaks.x[1:2])+(0:(nclass-1))*diff(breaks.x[1:2]), 1))
+    yy <- as.factor(round(mean(breaks.y[1:2])+(0:(nclass-1))*diff(breaks.y[1:2]), 1))
+    res <- cbind(expand.grid(xx,yy), h)
+    colnames(res) <- c(deparse(substitute(x)),deparse(substitute(y)),'Frequency')
+    formu <- as.formula(paste("Frequency ~ ", paste(colnames(res)[1:2], collapse= "+")))
+    cloud(formu, res, panel.3d.cloud=panel.3dbars, col.facet='lightblue',
+    xbase=1, ybase=1, scales=list(arrows=FALSE, col=1),
+    par.settings = list(axis.line = list(col = "transparent")))
 }
 
 library(latticeExtra)
@@ -359,8 +359,8 @@ fit
 
 x <- fit$points[,1]
 y <- fit$points[,2]
-plot(x, y, xlab="Coordinate 1", ylab="Coordinate 2", 
-     main="Metric MDS", type="n")
+plot(x, y, xlab="Coordinate 1", ylab="Coordinate 2",
+main="Metric MDS", type="n")
 text(x, y, labels = row.names(numsub), cex=.7)
 
 mdsscore <- data.frame(fit$points)
@@ -387,32 +387,32 @@ my_hist3d(x, y, nclass=10)
 
 newdf <- read.csv("clusterresults.csv")
 combdata <- cbind(numsub, newdf, numdata$q1,
-                  numdata$q2r1,
-                  numdata$q2r2,
-                  numdata$q2r3,
-                  numdata$q2r4,
-                  numdata$q2r5,
-                  numdata$q2r6,
-                  numdata$q2r7,
-                  numdata$q2r8,
-                  numdata$q2r9,
-                  numdata$q2r10,
-                  numdata$q4r1,
-                  numdata$q4r2,
-                  numdata$q4r3,
-                  numdata$q4r4,
-                  numdata$q4r5,
-                  numdata$q4r6,
-                  numdata$q4r7,
-                  numdata$q4r8,
-                  numdata$q4r9,
-                  numdata$q4r10,
-                  numdata$q4r11,
-                  numdata$q12.imp, numdata$q13r1, numdata$q13r2, numdata$q13r3,
-                  numdata$q13r4, numdata$q13r5, numdata$q13r6, numdata$q13r7, numdata$q13r8, numdata$q13r9,
-                  numdata$q13r10, numdata$q13r11, numdata$q13r12, numdata$q48,
-                  numdata$q49, numdata$q54, numdata$q56, 
-                  numdata$q57.imp)
+numdata$q2r1,
+numdata$q2r2,
+numdata$q2r3,
+numdata$q2r4,
+numdata$q2r5,
+numdata$q2r6,
+numdata$q2r7,
+numdata$q2r8,
+numdata$q2r9,
+numdata$q2r10,
+numdata$q4r1,
+numdata$q4r2,
+numdata$q4r3,
+numdata$q4r4,
+numdata$q4r5,
+numdata$q4r6,
+numdata$q4r7,
+numdata$q4r8,
+numdata$q4r9,
+numdata$q4r10,
+numdata$q4r11,
+numdata$q12.imp, numdata$q13r1, numdata$q13r2, numdata$q13r3,
+numdata$q13r4, numdata$q13r5, numdata$q13r6, numdata$q13r7, numdata$q13r8, numdata$q13r9,
+numdata$q13r10, numdata$q13r11, numdata$q13r12, numdata$q48,
+numdata$q49, numdata$q54, numdata$q56,
+numdata$q57.imp)
 head(combdata)
 require(reshape)
 combdata <- rename(combdata, c(clusterresults.cluster="cluster"))
@@ -439,16 +439,16 @@ is.na(y) # returns a vector (F F F T)
 ### Imputing Data
 
 random.imp <- function (a){
-  missing <- is.na(a)
-  n.missing <- sum(missing)
-  a.obs <- a[!missing]
-  imputed <- a
-  imputed[missing] <- sample (a.obs, n.missing, replace=TRUE)
-  return (imputed)
+    missing <- is.na(a)
+    n.missing <- sum(missing)
+    a.obs <- a[!missing]
+    imputed <- a
+    imputed[missing] <- sample (a.obs, n.missing, replace=TRUE)
+    return (imputed)
 }
 
 shazam.imp <- random.imp(numdata$q5r1)
 
 read.csv(file, header = TRUE, sep = ",", quote = "\"",
-         dec = ".", fill = TRUE, comment.char = "", ...)
+dec = ".", fill = TRUE, comment.char = "", ...)
 
